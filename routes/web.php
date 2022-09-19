@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\LedgerController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,11 +26,13 @@ Route::get('/', function () {
 });
 
 
-Route::get('/payments/create', [PaymentsController::class, 'create'])->name('payments.create');
-Route::post('/payments', [PaymentsController::class, 'store'])->name('payments.store');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/ledger', [LedgerController::class, 'index'])->name('ledger.index');
+    Route::get('/ledger/create', [LedgerController::class, 'create'])->name('ledger.create');
+    Route::post('/ledger', [LedgerController::class, 'store'])->name('ledger.store');
+    Route::get('/ledger/{ledger}/edit', [LedgerController::class, 'edit'])->name('ledger.edit');
+    Route::patch('/ledger/{ledger}', [LedgerController::class, 'update'])->name('ledger.update');
+});
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';

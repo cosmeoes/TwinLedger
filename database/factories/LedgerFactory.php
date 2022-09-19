@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,10 @@ class LedgerFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'concept' => $this->faker->sentence(),
+            'amount' => $this->faker->numberBetween(10, 3000),
+            'lender_id' => User::factory(),
+            'debtor_id' => User::factory(),
         ];
     }
 }

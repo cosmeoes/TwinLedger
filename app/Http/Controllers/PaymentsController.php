@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ledger;
 use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -37,8 +38,12 @@ class PaymentsController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(Ledger $ledger)
     {
+        return Inertia::render("CreatePayment", [
+            'users' => User::all(),
+            'ledger' => $ledger,
+        ]);
     }
 
     public function update(Request $request, $id)

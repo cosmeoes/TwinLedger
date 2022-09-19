@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('ledgers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('amount');
+            $table->foreignId('lender_id');
+            $table->foreignId('debtor_id');
+            $table->text('concept');
             $table->timestamps();
         });
     }
