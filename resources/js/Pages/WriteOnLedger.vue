@@ -7,7 +7,6 @@ import InputError from '@/Components/InputError.vue';
 import TextInput from '@/Components/TextInput.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Select from '@/Components/Select.vue';
-import Button from '@/Components/Button.vue';
 
 const user = usePage().props.value.auth.user
 
@@ -20,7 +19,8 @@ const nonSelectedUser = id => {
 }
 
 const form = useForm({
-    amount: '',
+    amount: 0,
+    operation: '',
     lender_id: user.id,
     debtor_id: nonSelectedUser(user.id).id, 
     concept: ''
@@ -34,6 +34,13 @@ watch(() => form.debtor_id, (selected) => {
     form.lender_id = nonSelectedUser(selected).id
 })
 
+const calculateAmount = () => {
+    try {
+        form.amount = eval(form.operation)
+    } catch {
+        form.amount = 0
+    }
+}
 
 const submit = () => {
     form.transform((data) => ({
@@ -61,8 +68,8 @@ const submit = () => {
                     <div class="flex w-full p-6 bg-white border-b border-gray-200 space-x-8">
                         <form @submit.prevent="submit">
                             <div>
-                                <InputLabel for="Amount" value="Amount"/>
-                                <TextInput id="amount" type="text" placeholder="95.50" class="block w-full mt-1" v-model="form.amount" required autofocus />
+                                <InputLabel for="Amount" :value='"Amount ($" + form.amount + ")"'/>
+                                <TextInput id="amount" type="text" placeholder="95.50" class="block w-full mt-1" @keyup="calculateAmount" v-model="form.operation" required autofocus />
                                 <InputError class="mt-2" :message="form.errors.amount" />
                             </div>
 

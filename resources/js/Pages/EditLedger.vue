@@ -22,6 +22,7 @@ const nonSelectedUser = id => {
 
 const form = useForm({
     amount: props.ledger.amount / 100,
+    operation: props.ledger.amount / 100,
     lender_id: props.ledger.lender_id,
     debtor_id: props.ledger.debtor_id, 
     concept: props.ledger.concept
@@ -35,6 +36,13 @@ watch(() => form.debtor_id, (selected) => {
     form.lender_id = nonSelectedUser(selected).id
 })
 
+const calculateAmount = () => {
+    try {
+        form.amount = eval(form.operation)
+    } catch {
+        form.amount = 0
+    }
+}
 
 const submit = () => {
     form.transform((data) => ({
@@ -62,8 +70,8 @@ const submit = () => {
                     <div class="flex w-full p-6 bg-white border-b border-gray-200 space-x-8">
                         <form @submit.prevent="submit">
                             <div>
-                                <InputLabel for="Amount" value="Amount"/>
-                                <TextInput id="amount" type="text" placeholder="95.50" class="block w-full mt-1" v-model="form.amount" required autofocus />
+                                <InputLabel for="Amount" :value="'Amount ($' + form.amount + ')' "/>
+                                <TextInput id="amount" type="text" placeholder="95.50" class="block w-full mt-1" @keyup="calculateAmount" v-model="form.operation" required autofocus />
                                 <InputError class="mt-2" :message="form.errors.amount" />
                             </div>
 
