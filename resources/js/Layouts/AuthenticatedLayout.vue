@@ -11,7 +11,6 @@ import { Link, usePage } from '@inertiajs/inertia-vue3';
 const showingNavigationDropdown = ref(false);
 
 const user = usePage().props.value.auth.user
-const positiveCredit = user.credit >= 0
 </script>
 
 <template>
@@ -33,6 +32,9 @@ const positiveCredit = user.credit >= 0
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink :href="route('ledger.index')" :active="route().current('ledger.index')">
                                     The Ledger 📜
+                                </NavLink>
+                                <NavLink :href="route('recurring.index')" :active="route().current('recurring.index')">
+                                    Recurring Charges 🔄
                                 </NavLink>
                             </div>
                         </div>
