@@ -25,6 +25,7 @@ const form = useForm({
     debtor_id: nonSelectedUser(user.id).id,
     concept: '',
     monthly_at: 1,
+    ends_at: null,
 });
 
 watch(() => form.lender_id, (selected) => {
@@ -93,6 +94,11 @@ const submit = () => {
                                 <InputLabel for="monthlyAt" value="Monthly At (Day)"/>
                                 <TextInput id="monthlyAt" type="text" placeholder="1" class="block w-full mt-1" v-model="form.monthly_at" required autofocus />
                                 <InputError class="mt-2" :message="form.errors.monthly_at" />
+                            </div>
+                            <div class="mt-4">
+                                <InputLabel for="endsAt" value="Ends At (Optional)"/>
+                                <TextInput id="endsAt" type="date" placeholder="" class="block w-full mt-1" v-model="form.ends_at" autofocus />
+                                <InputError class="mt-2" :message="form.errors.ends_at" />
                             </div>
                             <div class="flex items-center justify-end mt-4">
                                 <Link :href="route('recurring.index')" class="px-4 py-1 ml-4 text-white bg-red-400 rounded-md hover:bg-red-500" :class="{ 'opacity-25': form.processing }" :disabled="form.processing" as="button" type="button">

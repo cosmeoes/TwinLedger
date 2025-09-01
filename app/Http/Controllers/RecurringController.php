@@ -35,6 +35,7 @@ class RecurringController extends Controller
             'debtor_id' => 'required|exists:users,id',
             'concept' => 'required|string',
             'monthly_at' => 'required|integer',
+            'ends_at' => 'nullable|date',
         ]));
 
         return redirect()->route('recurring.index');
@@ -59,7 +60,9 @@ class RecurringController extends Controller
             'amount' => 'required|integer',
             'lender_id' => 'required|exists:users,id',
             'debtor_id' => 'required|exists:users,id',
+            'concept' => 'required|string',
             'monthly_at' => 'required|integer',
+            'ends_at' => 'nullable|date',
         ]));
 
         return redirect()->route('recurring.index');

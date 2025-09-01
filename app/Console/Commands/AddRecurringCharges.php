@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Ledger;
 use App\Models\RecurringItem;
 use Illuminate\Console\Command;
+use Carbon\Carbon;
 
 class AddRecurringCharges extends Command
 {
@@ -32,6 +33,9 @@ class AddRecurringCharges extends Command
         $recurringItems = RecurringItem::where('monthly_at', now()->day)->get();
 
         foreach ($recurringItems as $recurringItem) {
+            if ($recurringItem->ends_at && Carbon::parse($recurringItem->ends_at)->setHour(12) < now()->today()) {
+                continue;
+            }
             Ledger::create([
                 'amount' => $recurringItem->amount,
                 'lender_id' => $recurringItem->lender_id,
