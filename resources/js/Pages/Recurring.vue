@@ -37,19 +37,22 @@ const user = usePage().props.value.auth.user
                                     <tr>
                                         <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                             Concept
-                                        </th> 
+                                        </th>
                                         <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                             Lender Name
-                                        </th> 
+                                        </th>
                                         <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                             Debtor Name
-                                        </th> 
+                                        </th>
                                         <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                             Amount
-                                        </th> 
+                                        </th>
                                         <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                             Next Charge
-                                        </th> 
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                            End Date
+                                        </th>
                                         <th>
                                         </th>
                                     </tr>
@@ -70,6 +73,9 @@ const user = usePage().props.value.auth.user
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             {{ new Date(registry.next_charge).toLocaleString('en-mx', { year: 'numeric', month: 'short', day: 'numeric' }) }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {{ registry.end_date ? new Date(registry.end_date).toLocaleString('en-mx', { year: 'numeric', month: 'short', day: 'numeric' }) : "--" }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex justify-between">

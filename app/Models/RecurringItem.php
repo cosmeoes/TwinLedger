@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class RecurringItem extends Model
 {
+
     use HasFactory;
 
     public $guarded = [];
 
-    protected $appends = ['formatted_amount', 'next_charge'];
+    protected $appends = ['formatted_amount', 'next_charge', 'end_date'];
 
     public function lender()
     {
@@ -42,6 +43,19 @@ class RecurringItem extends Model
                 }
 
                 return now()->addMonth()->setDay($this->monthly_at)->setHour(12);
+            }
+        );
+    }
+
+    protected function endDate(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                if (!$this->ends_at) {
+                    return null;
+                }
+
+                return now()->parse($this->ends_at)->setHour(12);
             }
         );
     }

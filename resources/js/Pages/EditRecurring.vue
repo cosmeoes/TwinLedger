@@ -24,10 +24,12 @@ const form = useForm({
     amount: props.recurringItem.amount / 100,
     operation: props.recurringItem.amount / 100,
     lender_id: props.recurringItem.lender_id,
-    debtor_id: props.recurringItem.debtor_id, 
+    debtor_id: props.recurringItem.debtor_id,
     concept: props.recurringItem.concept,
     monthly_at: props.recurringItem.monthly_at,
+    ends_at: props.recurringItem.ends_at,
 });
+
 
 watch(() => form.lender_id, (selected) => {
     form.debtor_id = nonSelectedUser(selected).id
@@ -89,12 +91,17 @@ const submit = () => {
                             <div class="mt-4">
                                 <InputLabel for="debtorId" value="Concept"/>
                                 <textarea class="w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" placeholder="Buffalucas" name="concept" v-model="form.concept"/>
-                                <InputError class="mt-2" :message="form.errors.debtorId" />
+                                <InputError class="mt-2" :message="form.errors.concept" />
                             </div>
                             <div class="mt-4">
                                 <InputLabel for="monthlyAt" value="Monthly At (Day)"/>
                                 <TextInput id="monthlyAt" type="text" placeholder="1" class="block w-full mt-1" v-model="form.monthly_at" required autofocus />
                                 <InputError class="mt-2" :message="form.errors.monthly_at" />
+                            </div>
+                            <div class="mt-4">
+                                <InputLabel for="endsAt" value="Ends At (Optional)"/>
+                                <TextInput id="endsAt" type="date" placeholder="" class="block w-full mt-1" v-model="form.ends_at" autofocus />
+                                <InputError class="mt-2" :message="form.errors.ends_at" />
                             </div>
                             <div class="flex items-center justify-end mt-4">
                                 <Link :href="route('recurring.index')" class="px-4 py-1 ml-4 text-white bg-red-400 rounded-md hover:bg-red-500" :class="{ 'opacity-25': form.processing }" :disabled="form.processing" as="button" type="button">
